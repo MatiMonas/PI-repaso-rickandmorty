@@ -18,9 +18,10 @@ const getAllCharacters = async (req, res, next) => {
                 },
             });
 
-            APIcharacters = await axios.get(
+            let response = await axios.get(
                 'https://rickandmortyapi.com/api/character/?name=' + name,
             );
+            APIcharacters = response.data.results;
         } catch (err) {
             next(err);
         }
