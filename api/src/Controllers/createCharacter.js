@@ -1,13 +1,17 @@
 const { Character, Episode } = require('../Models/index.js');
 
 const createCharacter = async (req, res, next) => {
-    console.log('enter');
-    const { name, image } = req.body;
+    const { name, image, episodes } = req.body;
     Character.create({
         name,
         image,
     })
-        .then((character) => res.json(character))
+        .then((character) => {
+            return character.setEpisodes(episodes);
+        })
+        .then((characterWithEpisodes) => {
+            res.json(characterWithEpisodes);
+        })
         .catch((err) => next(err));
 };
 
@@ -16,7 +20,7 @@ const createCharacter2 = async (req, res, next) => {
     const character = await Character.findByPk(characterId);
     const episode = await Episode.findByPk(episodeId);
     const result = await character.addEpisode(episode);
-    res.send(result)
-};
+    res.send(result);
+}; 
 
-module.exports = {createCharacter, createCharacter2};
+module.exports = { createCharacter, createCharacter2 };

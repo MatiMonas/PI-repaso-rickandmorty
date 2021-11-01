@@ -1,17 +1,16 @@
 const {Router} = require('express');
 const router = Router();
 
-const getCharacters = require('../Controllers/getCharacters')
-const getDBCharacters = require('../Controllers/getDBCharacters')
+const getCharacter = require('../Controllers/getCharacter')
 const {createCharacter} = require('../Controllers/createCharacter');
 const {createCharacter2} = require('../Controllers/createCharacter');
 const getAllCharacters = require('../Controllers/getAllCharacters');
 
 
-router.get('/', getCharacters)
-router.get('/all' , getAllCharacters)
-router.get('/db', getDBCharacters)
-router.post('/create' , createCharacter)
+
+router.get('/' , getAllCharacters)
+router.post('/' , createCharacter)
+router.get('/:id' , getCharacter)
 router.post('/:characterId/episode/:episodeId' , createCharacter2)
 
 

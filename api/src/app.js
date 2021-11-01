@@ -6,21 +6,27 @@ const morgan = require('morgan');
 const errorHandlers = require('./Utils/middlewares/errorHandlers');
 const setHeaders = require('./Utils/middlewares/setHeaders');
 
-require('./Models/index')
+require('./Models/index');
 
 const routes = require('./Routes/index.js');
 
 const server = express();
-server.name = "API"
+server.name = 'API';
 
-server.use(bodyParser.urlencoded({ extended: true, limit:"50mb " }));
-server.use(bodyParser.json({limit:"50mb"}));
+server.use(bodyParser.urlencoded({ extended: true, limit: '50mb ' }));
+server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
-server.use(cors());
+server.use(
+    cors({
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+);
 server.use(morgan('dev'));
 server.use(setHeaders);
-server.use(errorHandlers)
+server.use('/api', routes);
+server.use(errorHandlers);
 
-server.use('/api', routes)
 
 module.exports = server;

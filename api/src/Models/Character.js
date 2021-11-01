@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
         // },
         createdInDB : {
             type: DataTypes.STRING,
-            defaultValue: 'yes'
+            defaultValue: true
         }
     });
 };
