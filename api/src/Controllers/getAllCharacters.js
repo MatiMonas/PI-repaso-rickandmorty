@@ -30,7 +30,7 @@ const getAllCharacters = async (req, res, next) => {
 
       const characters = [...dataBaseCharacters, ...APIcharacters];
 
-      res.send('hola');
+      res.json(characters);
     } catch (error) {
       next(error);
     }
