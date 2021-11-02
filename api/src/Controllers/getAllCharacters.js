@@ -20,19 +20,27 @@ const getAllCharacters = async (req, res, next) => {
       let characterResult = await axios.get(
         `https://rickandmortyapi.com/api/character/?name=${name}`,
       );
-      APIcharacters = characterResult.data.results?.map((character) => {
-        return {
-          id: character.id,
-          name: character.name,
-          image: character.image,
-        };
-      });
+
+      APIcharacters =
+        characterResult.data.results.length > 0
+          ? characterResult.data.results?.map((character) => {
+              return {
+                id: character.id,
+                name: character.name,
+                image: character.image,
+              };
+            })
+          : [];
 
       const characters = [...dataBaseCharacters, ...APIcharacters];
 
       res.json(characters);
     } catch (error) {
-      next(error);
+      try {
+        res.json(dataBaseCharacters);
+      } catch (error) {
+        next(error);
+      }
     }
   } else {
     try {
