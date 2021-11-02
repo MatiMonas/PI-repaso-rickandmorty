@@ -1,16 +1,15 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { getCharacters, getEpisodes } from './Redux/actions';
 
 function App() {
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios.get('localhost:3001/api/episodes')
-    
-  }, [])
-  return (
-    <div>Rick and morty app</div>
-  );
+    dispatch(getCharacters());
+    dispatch(getEpisodes());
+  }, [dispatch]);
+  return <div>Rick and morty app</div>;
 }
 
 export default App;
